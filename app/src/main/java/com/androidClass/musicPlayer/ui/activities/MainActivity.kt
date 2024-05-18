@@ -1,14 +1,19 @@
 package com.androidClass.musicPlayer.ui.activities
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.androidClass.musicPlayer.ui.composable.HomeScreenParent
 import com.androidClass.musicPlayer.ui.theme.MusicPlayerJetpackComposeTheme
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
@@ -27,6 +32,7 @@ class MainActivity : ComponentActivity() {
      * which uses the activity as the ViewModelStoreOwner.
      */
     private val viewModel: HomeViewModel by viewModels()
+    private val PermissionsRequestCode = 123
 
     /**
      * The [onCreate] method is called when the activity is starting.
@@ -36,6 +42,7 @@ class MainActivity : ComponentActivity() {
      * then this Bundle contains the data it most recently supplied in [onSaveInstanceState].
      * Otherwise it is null.
      */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -48,5 +55,27 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
+            != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.READ_MEDIA_AUDIO),
+                PermissionsRequestCode);
+        }
+
+
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this@MainActivity, "audio Permission Granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this@MainActivity, "audio Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+
     }
 }
