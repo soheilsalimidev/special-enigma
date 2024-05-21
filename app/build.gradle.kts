@@ -145,4 +145,7 @@ dependencies {
     // Debugging Tools
     debugImplementation(Deps.debugComposeUiTooling)
     debugImplementation(Deps.debugComposeUiTestManifest)
+
+    // Add Truth library
+    testImplementation ("com.google.truth:truth:1.0.1")
 }
