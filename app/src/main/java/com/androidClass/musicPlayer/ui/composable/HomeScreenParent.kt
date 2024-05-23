@@ -16,6 +16,7 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -25,13 +26,15 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.androidClass.musicPlayer.R
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.PlaybackState
 import com.androidClass.musicPlayer.player.PlayerEvents
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_primary
+import com.androidClass.musicPlayer.ui.theme.md_theme_light_outline
 import com.androidClass.musicPlayer.ui.theme.typography
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
 import kotlinx.coroutines.flow.StateFlow
@@ -93,14 +96,17 @@ fun TrackList(
     ) {
         Scaffold(topBar = {
             Surface(shadowElevation = 5.dp) {
-                TopAppBar(
+                CenterAlignedTopAppBar(
                     title = {
                         Text(
                             text = stringResource(id = R.string.app_title),
-                            style = typography.titleLarge
+                            style = typography.titleLarge,
+                            color = Color.Black,
+                            fontSize = 27.sp,
                         )
+
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = md_theme_light_primary)
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = md_theme_light_outline)
                 )
             }
         }) { paddingValues ->
