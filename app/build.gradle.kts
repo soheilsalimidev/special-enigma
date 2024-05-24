@@ -142,10 +142,22 @@ dependencies {
     androidTestImplementation(Deps.androidTestExpresso)
     androidTestImplementation(Deps.testComposeUiTestJUnit4)
 
+    implementation ("com.google.android.exoplayer:exoplayer:2.19.1") // Replace X.X with the latest version
+    testImplementation(kotlin("test"))
     // Debugging Tools
     debugImplementation(Deps.debugComposeUiTooling)
     debugImplementation(Deps.debugComposeUiTestManifest)
 
     // Add Truth library
     testImplementation ("com.google.truth:truth:1.0.1")
+
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.6.7")
+    androidTestImplementation ("androidx.compose.ui:ui-test-manifest:1.6.7")
+    testImplementation ("org.mockito:mockito-core:4.2.0")
+    testImplementation ("org.mockito:mockito-inline:4.2.0")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.3.0")
+    androidTestImplementation ("org.mockito:mockito-core:4.2.0")
+    androidTestImplementation ("org.mockito:mockito-inline:4.2.0")
+    androidTestImplementation ("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    //debugImplementation ("androidx.compose.ui:ui-test-manifest:1.3.0")
 }
