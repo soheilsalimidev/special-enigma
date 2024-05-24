@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,7 +33,6 @@ class MainActivity : ComponentActivity() {
      * which uses the activity as the ViewModelStoreOwner.
      */
     private val viewModel: HomeViewModel by viewModels()
-    private val PermissionsRequestCode = 123
 
     /**
      * The [onCreate] method is called when the activity is starting.
@@ -45,6 +45,40 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (!isGranted) {
+                    Toast.makeText(this@MainActivity, "audio Permission Denied", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_MEDIA_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED -> {
+
+            }
+
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this, Manifest.permission.READ_MEDIA_AUDIO
+
+            ) -> {
+                Toast.makeText(this@MainActivity, "audio Permission Denied", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(
+                    Manifest.permission.READ_MEDIA_AUDIO
+                )
+            }
+        }
+
         setContent {
             // Set the theme of the app to MusicPlayerJetpackComposeTheme.
             MusicPlayerJetpackComposeTheme {
@@ -55,24 +89,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
-            != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.READ_MEDIA_AUDIO),
-                PermissionsRequestCode);
-        }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this@MainActivity, "audio Permission Granted", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this@MainActivity, "audio Permission Denied", Toast.LENGTH_SHORT).show()
-            }
-
-    }
 }
