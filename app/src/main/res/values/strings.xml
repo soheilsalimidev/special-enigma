@@ -5,4 +5,5 @@
     <string name="icon_play_pause">Icon Play/Pause</string>
     <string name="icon_skip_previous">Icon Skip Previous</string>
     <string name="icon_skip_next">Icon Skip Next</string>
+    <string name="title_activity_player2">PlayerActivity2</string>
 </resources>
