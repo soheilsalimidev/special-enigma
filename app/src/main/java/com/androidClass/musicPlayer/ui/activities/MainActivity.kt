@@ -62,9 +62,6 @@ class MainActivity : ComponentActivity() {
                 arrayOf(Manifest.permission.READ_MEDIA_AUDIO),
                 PermissionsRequestCode);
         }
-
-
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,

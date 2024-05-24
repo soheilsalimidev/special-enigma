@@ -21,8 +21,8 @@ import com.androidClass.musicPlayer.R
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.PlayerStates.STATE_PLAYING
 import com.androidClass.musicPlayer.ui.theme.md_theme_light_onPrimary
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_onSurfaceVariant
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_primary
+import com.androidClass.musicPlayer.ui.theme.md_theme_light_scrim
+import com.androidClass.musicPlayer.ui.theme.md_theme_light_outline
 import com.androidClass.musicPlayer.ui.theme.md_theme_light_surfaceVariant
 import com.androidClass.musicPlayer.ui.theme.typography
 
@@ -36,9 +36,9 @@ import com.androidClass.musicPlayer.ui.theme.typography
  */
 @Composable
 fun TrackListItem(track: Track, onTrackClick: () -> Unit) {
-    val bgColor = if (track.isSelected) md_theme_light_primary else md_theme_light_surfaceVariant
+    val bgColor = if (track.isSelected) md_theme_light_outline else md_theme_light_surfaceVariant
     val textColor =
-        if (track.isSelected) md_theme_light_onPrimary else md_theme_light_onSurfaceVariant
+        if (track.isSelected) md_theme_light_onPrimary else md_theme_light_scrim
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier

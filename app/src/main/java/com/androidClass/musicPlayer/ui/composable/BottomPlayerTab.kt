@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.PlayerEvents
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_primary
+import com.androidClass.musicPlayer.ui.theme.md_theme_light_outline
 
 /**
  * [BottomPlayerTab] is a composable that represents the bottom player tab UI in the application.
@@ -33,7 +33,7 @@ fun BottomPlayerTab(
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-            .background(color = md_theme_light_primary)
+            .background(color = md_theme_light_outline)
             .clickable(onClick = onBottomTabClick)
             .padding(all = 15.dp)
     ) {

@@ -48,7 +48,7 @@ class TrackRepositoryImpl @Inject constructor(context: Context) : TrackRepositor
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    @SuppressLint("Range", "Recycle")
+    @SuppressLint("Range", "Recycle", "SuspiciousIndentation")
     private fun createTracks(context: Context) {
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
