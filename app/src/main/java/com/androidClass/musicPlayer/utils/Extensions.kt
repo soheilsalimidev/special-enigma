@@ -18,9 +18,6 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 
-/**
- * Resets the state of each track in the list to the default state.
- */
 fun MutableList<Track>.resetTracks() {
     this.forEach { track ->
         track.isSelected = false
@@ -28,21 +25,11 @@ fun MutableList<Track>.resetTracks() {
     }
 }
 
-/**
- * Converts a list of [Track] objects into a mutable list of [MediaItem] objects.
- *
- * @return A mutable list of [MediaItem] objects.
- */
 fun List<Track>.toMediaItemList(): MutableList<MediaItem> {
     return this.map { MediaItem.fromUri(it.trackUrl) }.toMutableList()
 }
 
-/**
- * Collects the player state from [myPlayer] and provides updates via the [updateState] function.
- *
- * @param myPlayer The player whose state is to be collected.
- * @param updateState A function to process the player state updates.
- */
+
 fun CoroutineScope.collectPlayerState(
     myPlayer: MyPlayer, updateState: (PlayerStates) -> Unit
 ) {
@@ -53,14 +40,7 @@ fun CoroutineScope.collectPlayerState(
     }
 }
 
-/**
- * Launches a coroutine to periodically update the [playbackStateFlow] with the current
- * playback position and track duration from [myPlayer] as long as the player state is [STATE_PLAYING].
- *
- * @param playbackStateFlow The MutableStateFlow to be updated.
- * @param state The current player state.
- * @param myPlayer The player whose playback information is to be collected.
- */
+
 fun CoroutineScope.launchPlaybackStateJob(
     playbackStateFlow: MutableStateFlow<PlaybackState>, state: PlayerStates, myPlayer: MyPlayer
 ) = launch {
@@ -75,11 +55,6 @@ fun CoroutineScope.launchPlaybackStateJob(
     } while (state == STATE_PLAYING && isActive)
 }
 
-/**
- * Formats a long duration value (in milliseconds) into a time string in the format "MM:SS".
- *
- * @return The formatted time string.
- */
 fun Long.formatTime(): String {
     val totalSeconds = this / 1000
     val minutes = totalSeconds / 60

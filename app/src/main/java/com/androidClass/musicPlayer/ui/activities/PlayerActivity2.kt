@@ -3,6 +3,7 @@ package com.androidClass.musicPlayer.ui.activities
 import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,17 +15,17 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.core.net.toUri
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.ui.composable.BottomPlayerTab
-import com.androidClass.musicPlayer.ui.composable.HomeScreenParent
+import com.androidClass.musicPlayer.ui.composable.BottomSheetDialog
 import com.androidClass.musicPlayer.ui.theme.MusicPlayerJetpackComposeTheme
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
-import java.io.File
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.FileNotFoundException
 
 
 @SuppressLint("RestrictedApi")
+@AndroidEntryPoint
 class PlayerActivity2 : androidx.activity.ComponentActivity() {
     private val viewModel: HomeViewModel by viewModels()
 
@@ -78,6 +79,19 @@ class PlayerActivity2 : androidx.activity.ComponentActivity() {
                 }
                 c.close()
             }
+        } else {
+            intent.getStringExtra("trackUrl")
+                ?.let { track.trackUrl(it) }
+            intent.getStringExtra("artistName")
+                ?.let { track.artistName(it) }
+
+            intent.getByteArrayExtra("trackImage")
+                ?.let {
+                    val bmp = BitmapFactory.decodeByteArray(it, 0, it.size)
+                    track.trackImage(bmp)
+                }
+            intent.getStringExtra("trackName")
+                ?.let { track.trackName(it) }
         }
 
 
@@ -86,9 +100,11 @@ class PlayerActivity2 : androidx.activity.ComponentActivity() {
             MusicPlayerJetpackComposeTheme {
 
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    BottomPlayerTab(selectedTrack = track.build(), playerEvents = viewModel) {
-
-                    }
+                    BottomSheetDialog(
+                        selectedTrack = track.build(),
+                        playerEvents = viewModel,
+                        viewModel.playbackState
+                    )
                 }
             }
         }

@@ -29,11 +29,7 @@ data class Track(
     var isSelected: Boolean = false,
     var state: PlayerStates = STATE_IDLE
 ) {
-    /**
-     * Builder class for [Track].
-     *
-     * This allows for the incremental construction of a [Track] object.
-     */
+
     class Builder {
         private var trackId: Int = 0
         private lateinit var trackName: String
@@ -49,11 +45,7 @@ data class Track(
         fun trackImage(trackImage: Bitmap) = apply { this.trackImage = trackImage }
         fun artistName(artistName: String) = apply { this.artistName = artistName }
 
-        /**
-         * Builds and returns a [Track] object.
-         *
-         * @return A [Track] object with the set properties.
-         */
+
         fun build(): Track {
             return Track(
                 trackId,
