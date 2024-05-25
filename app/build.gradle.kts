@@ -115,6 +115,7 @@ dependencies {
 
     // Jetpack Compose and related libraries
     implementation(platform(Deps.composeBom))
+    implementation("androidx.test:runner:1.5.2")
     androidTestImplementation(Deps.composeBom)
     implementation(Deps.composeUI)
     implementation(Deps.composeUiGraphics)
@@ -160,4 +161,8 @@ dependencies {
     androidTestImplementation ("org.mockito:mockito-inline:4.2.0")
     androidTestImplementation ("org.mockito.kotlin:mockito-kotlin:4.0.0")
     //debugImplementation ("androidx.compose.ui:ui-test-manifest:1.3.0")
+
+    testImplementation ("io.mockk:mockk:1.12.3") // Replace with the latest version
+    androidTestImplementation ("androidx.test:testing-platform:1.4.0") // Replace with the latest version
+    androidTestImplementation ("androidx.contrib:androidx-test-ext-junit:1.1.3")// Replace with the latest version
 }
