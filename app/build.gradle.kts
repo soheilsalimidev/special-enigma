@@ -38,6 +38,24 @@ android {
     buildFeatures {
         buildConfig = true
     }
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+
+
+
+
+
+
 
     /**
      * Configurations that apply to all build variants.
@@ -147,22 +165,57 @@ dependencies {
     testImplementation(kotlin("test"))
     // Debugging Tools
     debugImplementation(Deps.debugComposeUiTooling)
-    debugImplementation(Deps.debugComposeUiTestManifest)
+   // debugImplementation(Deps.debugComposeUiTestManifest)
 
     // Add Truth library
-    testImplementation ("com.google.truth:truth:1.0.1")
+    testImplementation ("com.google.truth:truth:1.1.3")
 
     androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.6.7")
     androidTestImplementation ("androidx.compose.ui:ui-test-manifest:1.6.7")
     testImplementation ("org.mockito:mockito-core:4.2.0")
     testImplementation ("org.mockito:mockito-inline:4.2.0")
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.3.0")
+    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:1.6.7")
     androidTestImplementation ("org.mockito:mockito-core:4.2.0")
     androidTestImplementation ("org.mockito:mockito-inline:4.2.0")
     androidTestImplementation ("org.mockito.kotlin:mockito-kotlin:4.0.0")
     //debugImplementation ("androidx.compose.ui:ui-test-manifest:1.3.0")
 
     testImplementation ("io.mockk:mockk:1.12.3") // Replace with the latest version
-    androidTestImplementation ("androidx.test:testing-platform:1.4.0") // Replace with the latest version
-    androidTestImplementation ("androidx.contrib:androidx-test-ext-junit:1.1.3")// Replace with the latest version
+    //androidTestImplementation ("androidx.test:testing-platform:1.0.1") // Replace with the latest version
+    //androidTestImplementation("androidx.test:annotation:1.1.0-alpha04")
+    //androidTestImplementation ("androidx.contrib:androidx-test-ext-junit:1.1.3")// Replace with the latest version
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.5")
+
+
+    // To use the androidx.test.core APIs
+    // androidTestImplementation("androidx.test:core:1.5.0")
+    // Kotlin extensions for androidx.test.core
+    // androidTestImplementation("androidx.test:core-ktx:1.5.0")
+
+    // To use the androidx.test.espresso
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // To use the JUnit Extension APIs
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    // Kotlin extensions for androidx.test.ext.junit
+    androidTestImplementation("androidx.test.ext:junit-ktx:1.1.5")
+
+    // To use the Truth Extension APIs
+    androidTestImplementation("androidx.test.ext:truth:1.5.0")
+
+    // To use the androidx.test.runner APIs
+    androidTestImplementation("androidx.test:runner:1.5.2")
+
+    // To use android test orchestrator
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
+
+    implementation("androidx.compose.ui:ui:1.6.7")
+
+
+
 }
+
+
+
+
+

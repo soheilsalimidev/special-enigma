@@ -21,11 +21,12 @@ import android.database.Cursor
 import io.mockk.every
 import io.mockk.mockk
 import android.content.Context
+import androidx.test.filters.SdkSuppress
 import java.io.FileNotFoundException
 
 
 @Modernizer // Add this if your project uses androidx libraries
-@androidx.test.filters.SdkSuppress(minSdkVersion = Build.VERSION_CODES.Q)  // Assuming the original class requires API level 29
+@SdkSuppress(minSdkVersion = Build.VERSION_CODES.Q)  // Assuming the original class requires API level 29
 class TrackRepositoryImplTest {
 
     fun testCreateTracks() {
@@ -75,7 +76,8 @@ class TrackRepositoryImplTest {
         // Mock cursor data with specific file path
         val mockCursor = mockk<Cursor>()
         every { mockCursor.getString(0) } returns "/storage/music/sample_song.mp3"
-        every { mockContext.contentResolver.query(any(), any(), any(), any(), any()) } returns mockCursor.cursor
+        //every { mockContext.contentResolver.query(any(), any(), any(), any(), any()) } returns mockCursor.cursor
+        every { mockContext.contentResolver.query(any(), any(), "name", any(), any()) } returns null // bejaye qabli
 
         val repository = TrackRepositoryImpl(mockContext)
         repository.createTracks(mockContext)
@@ -94,7 +96,9 @@ class TrackRepositoryImplTest {
         // Mock cursor data
         val mockCursor = mockk<Cursor>()
         every { mockCursor.getString(any()) } returns any()
-        every { mockContext.contentResolver.query(any(), any(), any(), any(), any()) } returns mockCursor.cursor
+      //  every { mockContext.contentResolver.query(any(), any(), any(), any(), any()) } returns mockCursor.cursor
+        every { mockContext.contentResolver.query(any(), any(), "Image", any(), any()) } returns null // bejaye qabli
+
 
         // Mock FileNotFoundException for track image loading
         val mockContentResolver = mockk<ContentResolver>()
