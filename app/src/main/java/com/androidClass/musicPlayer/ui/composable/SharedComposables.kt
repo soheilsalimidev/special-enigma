@@ -26,7 +26,12 @@ import com.androidClass.musicPlayer.ui.theme.md_theme_light_onPrimary
 import com.androidClass.musicPlayer.ui.theme.md_theme_light_onPrimaryContainer
 import com.androidClass.musicPlayer.ui.theme.typography
 
-
+/**
+ * A composable function that displays an image for a track.
+ *
+ * @param trackImage The resource identifier for the track image.
+ * @param modifier The modifier to be applied to the Image.
+ */
 @Composable
 fun TrackImage(
     trackImage: Bitmap,
@@ -40,7 +45,12 @@ fun TrackImage(
     )
 }
 
-
+/**
+ * A composable function that displays the name of a track.
+ *
+ * @param trackName The name of the track.
+ * @param modifier The modifier to be applied to the Text.
+ */
 @Composable
 fun TrackName(trackName: String, modifier: Modifier) {
     Text(
@@ -51,7 +61,12 @@ fun TrackName(trackName: String, modifier: Modifier) {
     )
 }
 
-
+/**
+ * A composable function that displays a "Previous" icon.
+ *
+ * @param onClick The action to be performed when the icon is clicked.
+ * @param isBottomTab A boolean indicating whether the icon is part of the bottom tab.
+ */
 @Composable
 fun PreviousIcon(onClick: () -> Unit, isBottomTab: Boolean) {
     IconButton(onClick = onClick) {
@@ -64,7 +79,14 @@ fun PreviousIcon(onClick: () -> Unit, isBottomTab: Boolean) {
     }
 }
 
-
+/**
+ * A composable function that displays a "Play/Pause" icon.
+ * Displays a loading spinner when the track is buffering.
+ *
+ * @param selectedTrack The currently selected track.
+ * @param onClick The action to be performed when the icon is clicked.
+ * @param isBottomTab A boolean indicating whether the icon is part of the bottom tab.
+ */
 @Composable
 fun PlayPauseIcon(selectedTrack: Track, onClick: () -> Unit, isBottomTab: Boolean) {
     if (selectedTrack.state == PlayerStates.STATE_BUFFERING) {
@@ -89,6 +111,12 @@ fun PlayPauseIcon(selectedTrack: Track, onClick: () -> Unit, isBottomTab: Boolea
     }
 }
 
+/**
+ * A composable function that displays a "Next" icon.
+ *
+ * @param onClick The action to be performed when the icon is clicked.
+ * @param isBottomTab A boolean indicating whether the icon is part of the bottom tab.
+ */
 @Composable
 fun NextIcon(onClick: () -> Unit, isBottomTab: Boolean) {
     IconButton(onClick = onClick) {

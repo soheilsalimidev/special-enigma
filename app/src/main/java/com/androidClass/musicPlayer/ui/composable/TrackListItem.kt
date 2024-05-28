@@ -26,7 +26,14 @@ import com.androidClass.musicPlayer.ui.theme.md_theme_light_outline
 import com.androidClass.musicPlayer.ui.theme.md_theme_light_surfaceVariant
 import com.androidClass.musicPlayer.ui.theme.typography
 
-
+/**
+ * A composable function that displays a list item for a track.
+ * The list item includes the track's image, name, and artist.
+ * Also includes a click action for the track.
+ *
+ * @param track The track to be displayed.
+ * @param onTrackClick The action to be performed when the track item is clicked.
+ */
 @Composable
 fun TrackListItem(track: Track, onTrackClick: () -> Unit) {
     val bgColor = if (track.isSelected) md_theme_light_outline else md_theme_light_surfaceVariant
@@ -54,6 +61,10 @@ fun TrackListItem(track: Track, onTrackClick: () -> Unit) {
     }
 }
 
+/**
+ * A composable function that displays a Lottie animation of an audio wave.
+ * The animation loops indefinitely.
+ */
 @Composable
 fun LottieAudioWave() {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.audio_wave))

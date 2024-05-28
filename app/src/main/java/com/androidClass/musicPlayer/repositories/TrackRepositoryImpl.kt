@@ -26,13 +26,23 @@ import javax.inject.Inject
 @RequiresApi(Build.VERSION_CODES.Q)
 class TrackRepositoryImpl @Inject constructor(context: Context) : TrackRepository {
 
+    /**
+     * A list of tracks stored in-memory.
+     */
     private val tracks = mutableListOf<Track>()
 
+    /**
+     * Initializes the tracks repository.
+     */
     init {
         // Initialize songs here or load from a data source
         createTracks(context)
     }
-
+    /**
+     * Retrieves a list of all tracks in the repository.
+     *
+     * @return a list of [Track] objects.
+     */
     override fun getTrackList(): List<Track> {
         return tracks
     }

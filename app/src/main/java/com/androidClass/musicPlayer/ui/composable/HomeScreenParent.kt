@@ -2,8 +2,6 @@
 
 package com.androidClass.musicPlayer.ui.composable
 
-import android.content.Intent
-import android.graphics.Bitmap
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.Box
@@ -23,12 +21,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,14 +34,11 @@ import com.androidClass.musicPlayer.R
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.PlaybackState
 import com.androidClass.musicPlayer.player.PlayerEvents
-import com.androidClass.musicPlayer.ui.activities.PlayerActivity2
 import com.androidClass.musicPlayer.ui.theme.md_theme_light_outline
 import com.androidClass.musicPlayer.ui.theme.typography
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-
 
 /**
  * A composable function that hosts the home screen of the application.
@@ -51,7 +46,6 @@ import java.io.ByteArrayOutputStream
  *
  * @param viewModel The ViewModel that is responsible for providing data to the UI and processing user actions.
  */
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreenParent(viewModel: HomeViewModel) {
     val fullScreenState = rememberModalBottomSheetState(
@@ -59,30 +53,28 @@ fun HomeScreenParent(viewModel: HomeViewModel) {
     )
     val scope = rememberCoroutineScope()
     val onBottomTabClick: () -> Unit = { scope.launch { fullScreenState.show() } }
-    val context = LocalContext.current
+
     TrackList(
         tracks = viewModel.tracks,
         selectedTrack = viewModel.selectedTrack,
         fullScreenState = fullScreenState,
         playerEvents = viewModel,
         playbackState = viewModel.playbackState,
-        onBottomTabClick = onBottomTabClick,
-        onImageClick = {
-            context. startActivity(Intent(context, PlayerActivity2::class.java).apply {
-                putExtra("trackUrl", viewModel.selectedTrack?.trackUrl)
-                putExtra("artistName", viewModel.selectedTrack?.artistName)
-                val stream = ByteArrayOutputStream()
-                viewModel.selectedTrack?.trackImage?.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                putExtra("trackImage", stream.toByteArray())
-                putExtra("trackName", viewModel.selectedTrack?.trackName)
-
-
-
-            })
-        }
+        onBottomTabClick = onBottomTabClick
     )
 }
 
+/**
+ * A composable function that displays a list of tracks and a bottom sheet dialog.
+ * The bottom sheet dialog is shown when a track is selected.
+ *
+ * @param tracks A list of tracks to be displayed.
+ * @param selectedTrack The currently selected track. If null, no track is selected.
+ * @param fullScreenState The state of the bottom sheet dialog.
+ * @param playerEvents The events that the player can trigger.
+ * @param playbackState The state of the media playback.
+ * @param onBottomTabClick A lambda function that is invoked when the bottom tab is clicked.
+ */
 @Composable
 fun TrackList(
     tracks: List<Track>,
@@ -90,8 +82,7 @@ fun TrackList(
     fullScreenState: ModalBottomSheetState,
     playerEvents: PlayerEvents,
     playbackState: StateFlow<PlaybackState>,
-    onBottomTabClick: () -> Unit,
-    onImageClick:()->Unit
+    onBottomTabClick: () -> Unit
 ) {
     ModalBottomSheetLayout(
         sheetContent = {
@@ -135,12 +126,7 @@ fun TrackList(
                         visible = selectedTrack != null,
                         enter = slideInVertically(initialOffsetY = { fullHeight -> fullHeight })
                     ) {
-                        BottomPlayerTab(
-                            selectedTrack!!,
-                            playerEvents,
-                            onBottomTabClick,
-                            onImageClick
-                        )
+                        BottomPlayerTab(selectedTrack!!, playerEvents, onBottomTabClick)
                     }
                 }
             }

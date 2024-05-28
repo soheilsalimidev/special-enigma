@@ -20,14 +20,28 @@ import com.androidClass.musicPlayer.ui.theme.MusicPlayerJetpackComposeTheme
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
+/**
+ * [MainActivity] is the main entry point of the app.
+ * It is annotated with [@AndroidEntryPoint] to enable field injection via Hilt.
+ * This class extends [ComponentActivity], which is a lean version of [AppCompatActivity].
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-
+    /**
+     * The [HomeViewModel] instance is obtained via the [viewModels] delegate,
+     * which uses the activity as the ViewModelStoreOwner.
+     */
     private val viewModel: HomeViewModel by viewModels()
 
-
+    /**
+     * The [onCreate] method is called when the activity is starting.
+     * It sets up the UI content and associates it with the activity.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down
+     * then this Bundle contains the data it most recently supplied in [onSaveInstanceState].
+     * Otherwise it is null.
+     */
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
