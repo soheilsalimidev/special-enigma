@@ -15,6 +15,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.room.Room
+import com.androidClass.musicPlayer.AppDatabase
 import com.androidClass.musicPlayer.ui.composable.HomeScreenParent
 import com.androidClass.musicPlayer.ui.theme.MusicPlayerJetpackComposeTheme
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
@@ -78,6 +80,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+
 
         setContent {
             // Set the theme of the app to MusicPlayerJetpackComposeTheme.

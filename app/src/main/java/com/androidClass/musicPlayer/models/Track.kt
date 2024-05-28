@@ -1,13 +1,12 @@
 package com.androidClass.musicPlayer.models
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import androidx.core.graphics.drawable.toDrawable
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import com.androidClass.musicPlayer.BuildConfig
-import com.androidClass.musicPlayer.R
 import com.androidClass.musicPlayer.player.PlayerStates
 import com.androidClass.musicPlayer.player.PlayerStates.STATE_IDLE
-import com.androidClass.musicPlayer.utils.drawableToBitmap
 
 /**
  * Represents a single music track.
@@ -20,14 +19,15 @@ import com.androidClass.musicPlayer.utils.drawableToBitmap
  * @property isSelected Indicates if the track is currently selected.
  * @property state The current playback state of the track.
  */
+@Entity
 data class Track(
-    val trackId: Int = 0,
-    val trackName: String = "",
-    val trackUrl: String = "",
-    val trackImage: Bitmap =  Bitmap.createBitmap(10,10  , Bitmap.Config.RGB_565) ,
-    val artistName: String = "",
-    var isSelected: Boolean = false,
-    var state: PlayerStates = STATE_IDLE
+    @PrimaryKey var trackId: Int = 0,
+    var trackName: String = "",
+    var trackUrl: String = "",
+    @Ignore var trackImage: Bitmap = Bitmap.createBitmap(10, 10, Bitmap.Config.RGB_565),
+    var artistName: String = "",
+    @Ignore var isSelected: Boolean = false,
+    @Ignore var state: PlayerStates = STATE_IDLE
 ) {
     /**
      * Builder class for [Track].
@@ -38,7 +38,7 @@ data class Track(
         private var trackId: Int = 0
         private lateinit var trackName: String
         private lateinit var trackUrl: String
-        private lateinit var trackImage: Bitmap
+        private var trackImage: Bitmap = Bitmap.createBitmap(10, 10, Bitmap.Config.RGB_565)
         private lateinit var artistName: String
         private var isSelected: Boolean = false
         private var state: PlayerStates = STATE_IDLE
@@ -66,7 +66,6 @@ data class Track(
             )
         }
     }
-
 
 
 }

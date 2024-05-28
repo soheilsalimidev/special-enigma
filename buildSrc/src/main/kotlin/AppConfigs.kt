@@ -34,5 +34,5 @@ object AppConfigs {
 
     const val jvmTarget = "17"
 
-    const val kotlinCompilerExtensionVersion = "1.4.3"
+    const val kotlinCompilerExtensionVersion = "1.5.3"
 }

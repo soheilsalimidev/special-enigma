@@ -1,19 +1,16 @@
 package com.androidClass.musicPlayer.repositories
 
 import android.annotation.SuppressLint
-import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
 import androidx.annotation.RequiresApi
+import com.androidClass.musicPlayer.dbo.FavTrackDbo
 import com.androidClass.musicPlayer.models.Track
 import java.io.FileNotFoundException
-import java.io.IOException
 import javax.inject.Inject
 
 
@@ -24,7 +21,8 @@ import javax.inject.Inject
  * @constructor Creates an instance of [TrackRepositoryImpl].
  */
 @RequiresApi(Build.VERSION_CODES.Q)
-class TrackRepositoryImpl @Inject constructor(context: Context) : TrackRepository {
+class TrackRepositoryImpl @Inject constructor(context: Context, private val trackDbo: FavTrackDbo) :
+    TrackRepository {
 
     /**
      * A list of tracks stored in-memory.
@@ -38,6 +36,7 @@ class TrackRepositoryImpl @Inject constructor(context: Context) : TrackRepositor
         // Initialize songs here or load from a data source
         createTracks(context)
     }
+
     /**
      * Retrieves a list of all tracks in the repository.
      *
@@ -45,6 +44,22 @@ class TrackRepositoryImpl @Inject constructor(context: Context) : TrackRepositor
      */
     override fun getTrackList(): List<Track> {
         return tracks
+    }
+
+    override  fun getFavTracks(): List<Track> {
+        return trackDbo.getAll()
+    }
+
+    override fun getFavId(trackName: String): Track? {
+        return trackDbo.findByTrackId(trackName)
+    }
+
+    override fun removeFav(track: Track) {
+        trackDbo.delete(track)
+    }
+
+    override fun addFav(track: Track) {
+        trackDbo.insert(track)
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -61,10 +76,10 @@ class TrackRepositoryImpl @Inject constructor(context: Context) : TrackRepositor
             uri,
             projection,
             null,
-           null,
+            null,
             null
         )
-var i =0;
+        var i = 0;
         if (c != null) {
             while (c.moveToNext()) {
                 i++;
@@ -76,12 +91,21 @@ var i =0;
                     c.getLong(c.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
 
 
-
-           val track=     Track.Builder().trackName(name).artistName(artist).trackUrl(path).trackId(i)
+                val track =
+                    Track.Builder().trackName(name).artistName(artist).trackUrl(path).trackId(i)
                 try {
-                    val contentUri = ContentUris.withAppendedId(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, albumId)
-                    track.trackImage( context.contentResolver.loadThumbnail(contentUri, Size(512, 512), null))
-                } catch(e: FileNotFoundException) {
+                    val contentUri = ContentUris.withAppendedId(
+                        MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
+                        albumId
+                    )
+                    track.trackImage(
+                        context.contentResolver.loadThumbnail(
+                            contentUri,
+                            Size(512, 512),
+                            null
+                        )
+                    )
+                } catch (e: FileNotFoundException) {
                     Log.e("TAG", "createTracks: ", e)
                 }
 

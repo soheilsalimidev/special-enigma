@@ -13,4 +13,10 @@ interface TrackRepository {
      * @return a list of [Track] objects.
      */
     fun getTrackList(): List<Track>
+
+    fun getFavTracks(): List<Track>
+     fun getFavId(trackName:String):Track?
+     fun addFav(track: Track)
+     fun removeFav(track: Track)
+
 }

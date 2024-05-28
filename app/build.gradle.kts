@@ -115,6 +115,7 @@ dependencies {
 
     // Jetpack Compose and related libraries
     implementation(platform(Deps.composeBom))
+    implementation("androidx.room:room-common:2.6.1")
     androidTestImplementation(Deps.composeBom)
     implementation(Deps.composeUI)
     implementation(Deps.composeUiGraphics)
@@ -159,5 +160,11 @@ dependencies {
     androidTestImplementation ("org.mockito:mockito-core:4.2.0")
     androidTestImplementation ("org.mockito:mockito-inline:4.2.0")
     androidTestImplementation ("org.mockito.kotlin:mockito-kotlin:4.0.0")
-    //debugImplementation ("androidx.compose.ui:ui-test-manifest:1.3.0")
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    ksp("androidx.room:room-compiler:$room_version")
+
 }

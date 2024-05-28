@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.androidClass.musicPlayer.dbo.FavTrackDbo
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.MyPlayer
 import com.androidClass.musicPlayer.player.PlaybackState
@@ -40,12 +41,13 @@ import javax.inject.Inject
 @Suppress("EmptyMethod")
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    trackRepository: TrackRepository, private val myPlayer: MyPlayer
+    private val trackRepository: TrackRepository, private val myPlayer: MyPlayer
 ) : ViewModel(), PlayerEvents {
     /**
      * A mutable state list of all tracks.
      */
-    private val _tracks = mutableStateListOf<Track>()
+    private var _tracks = mutableStateListOf<Track>()
+
     /**
      * An immutable snapshot of the current list of tracks.
      */
@@ -62,6 +64,7 @@ class HomeViewModel @Inject constructor(
      */
     var selectedTrack: Track? by mutableStateOf(null)
         private set
+
     /**
      * A private property backed by mutable state that holds the index of the currently selected track.
      */
@@ -77,6 +80,7 @@ class HomeViewModel @Inject constructor(
      * It is used to emit updates about the playback state to observers.
      */
     private val _playbackState = MutableStateFlow(PlaybackState(0L, 0L))
+
     /**
      * A public property that exposes the [_playbackState] as an immutable [StateFlow] for observers.
      */
@@ -95,6 +99,29 @@ class HomeViewModel @Inject constructor(
         _tracks.addAll(trackRepository.getTrackList())
         myPlayer.iniPlayer(tracks.toMediaItemList())
         observePlayerState()
+    }
+
+    override fun showAllTheSongs(){
+        _tracks.removeAll(_tracks)
+        _tracks.addAll(trackRepository.getTrackList())
+        myPlayer.iniPlayer(tracks.toMediaItemList())
+        observePlayerState()
+    }
+    override fun getFavTracks() {
+        _tracks.removeAll(_tracks)
+        _tracks.addAll(trackRepository.getFavTracks())
+        myPlayer.iniPlayer(tracks.toMediaItemList())
+        observePlayerState()
+    }
+
+    override fun addOrRemoveFromFav(track: Track): Boolean {
+        return if (trackRepository.getFavId(track.trackName) != null) {
+            trackRepository.removeFav(track)
+            false
+        } else {
+            trackRepository.addFav(track)
+            true
+        }
     }
 
     /**

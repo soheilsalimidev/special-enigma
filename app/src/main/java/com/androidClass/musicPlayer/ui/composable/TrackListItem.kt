@@ -1,11 +1,14 @@
 package com.androidClass.musicPlayer.ui.composable
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,8 +37,9 @@ import com.androidClass.musicPlayer.ui.theme.typography
  * @param track The track to be displayed.
  * @param onTrackClick The action to be performed when the track item is clicked.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TrackListItem(track: Track, onTrackClick: () -> Unit) {
+fun TrackListItem(track: Track, onTrackClick: () -> Unit, onTrackLongClick: () -> Unit) {
     val bgColor = if (track.isSelected) md_theme_light_outline else md_theme_light_surfaceVariant
     val textColor =
         if (track.isSelected) md_theme_light_onPrimary else md_theme_light_scrim
@@ -45,7 +49,10 @@ fun TrackListItem(track: Track, onTrackClick: () -> Unit) {
             .padding(all = 5.dp)
             .clip(shape = RoundedCornerShape(8.dp))
             .background(color = bgColor)
-            .clickable(onClick = onTrackClick)
+            .combinedClickable(
+                onClick = onTrackClick,
+                onLongClick = onTrackLongClick,
+            )
     ) {
         TrackImage(trackImage = track.trackImage, modifier = Modifier.size(size = 64.dp))
         Column(

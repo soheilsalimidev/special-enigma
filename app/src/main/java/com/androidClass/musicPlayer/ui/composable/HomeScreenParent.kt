@@ -2,6 +2,7 @@
 
 package com.androidClass.musicPlayer.ui.composable
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.Box
@@ -12,21 +13,26 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.isDebugInspectorInfoEnabled
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,6 +52,7 @@ import kotlinx.coroutines.launch
  *
  * @param viewModel The ViewModel that is responsible for providing data to the UI and processing user actions.
  */
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreenParent(viewModel: HomeViewModel) {
     val fullScreenState = rememberModalBottomSheetState(
@@ -75,6 +82,7 @@ fun HomeScreenParent(viewModel: HomeViewModel) {
  * @param playbackState The state of the media playback.
  * @param onBottomTabClick A lambda function that is invoked when the bottom tab is clicked.
  */
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun TrackList(
     tracks: List<Track>,
@@ -84,6 +92,7 @@ fun TrackList(
     playbackState: StateFlow<PlaybackState>,
     onBottomTabClick: () -> Unit
 ) {
+    val context = LocalContext.current
     ModalBottomSheetLayout(
         sheetContent = {
             if (selectedTrack != null) BottomSheetDialog(
@@ -106,7 +115,20 @@ fun TrackList(
                         )
 
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = md_theme_light_outline)
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = md_theme_light_outline),
+                    actions = {
+                        var isFav = false
+                        // RowScope here, so these icons will be placed horizontally
+                        IconButton(onClick = {
+                            if (!isFav)
+                                playerEvents.getFavTracks()
+                            else
+                                playerEvents.showAllTheSongs()
+                            isFav = !isFav
+                        }) {
+                            Icon(Icons.Filled.Favorite, contentDescription = null)
+                        }
+                    },
                 )
             }
         }) { paddingValues ->
@@ -119,7 +141,16 @@ fun TrackList(
                         items(tracks) {
                             TrackListItem(
                                 track = it,
-                                onTrackClick = { playerEvents.onTrackClick(it) })
+                                onTrackClick = { playerEvents.onTrackClick(it) },
+                                onTrackLongClick = {
+                                    if (playerEvents.addOrRemoveFromFav(it)) {
+                                        Toast.makeText(context, "Added to Fav", Toast.LENGTH_LONG)
+                                            .show()
+                                    } else {
+                                        Toast.makeText(context, "remove to Fav", Toast.LENGTH_LONG)
+                                            .show()
+                                    }
+                                })
                         }
                     }
                     AnimatedVisibility(

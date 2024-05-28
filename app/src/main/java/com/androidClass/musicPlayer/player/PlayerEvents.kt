@@ -35,4 +35,7 @@ interface PlayerEvents {
      * @param position The new position of the seek bar.
      */
     fun onSeekBarPositionChanged(position: Long)
+    fun addOrRemoveFromFav(track: Track):Boolean
+    fun getFavTracks()
+    fun showAllTheSongs()
 }
