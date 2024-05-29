@@ -40,8 +40,6 @@ import com.androidClass.musicPlayer.R
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.PlaybackState
 import com.androidClass.musicPlayer.player.PlayerEvents
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_outline
-import com.androidClass.musicPlayer.ui.theme.typography
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -109,13 +107,10 @@ fun TrackList(
                     title = {
                         Text(
                             text = stringResource(id = R.string.app_title),
-                            style = typography.titleLarge,
-                            color = Color.Black,
                             fontSize = 27.sp,
                         )
 
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = md_theme_light_outline),
                     actions = {
                         var isFav = false
                         // RowScope here, so these icons will be placed horizontally

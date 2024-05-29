@@ -8,8 +8,12 @@ import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
 import androidx.annotation.RequiresApi
+import androidx.core.database.getStringOrNull
+import androidx.core.graphics.drawable.toDrawable
+import com.androidClass.musicPlayer.R
 import com.androidClass.musicPlayer.dbo.FavTrackDbo
 import com.androidClass.musicPlayer.models.Track
+import com.androidClass.musicPlayer.utils.drawableToBitmap
 import java.io.FileNotFoundException
 import javax.inject.Inject
 
@@ -46,7 +50,7 @@ class TrackRepositoryImpl @Inject constructor(context: Context, private val trac
         return tracks
     }
 
-    override  fun getFavTracks(): List<Track> {
+    override fun getFavTracks(): List<Track> {
         return trackDbo.getAll()
     }
 
@@ -70,7 +74,8 @@ class TrackRepositoryImpl @Inject constructor(context: Context, private val trac
             MediaStore.Audio.AudioColumns.DATA,
             MediaStore.Audio.AudioColumns.ALBUM,
             MediaStore.Audio.ArtistColumns.ARTIST,
-            MediaStore.Audio.AudioColumns.ALBUM_ID
+            MediaStore.Audio.AudioColumns.ALBUM_ID,
+            MediaStore.Audio.AudioColumns.TITLE
         )
         val c = context.contentResolver.query(
             uri,
@@ -86,13 +91,16 @@ class TrackRepositoryImpl @Inject constructor(context: Context, private val trac
                 val path = c.getString(0)
                 val album = c.getString(1)
                 val artist = c.getString(2)
-                val name = path.substring(path.lastIndexOf("/") + 1)
+                val name = if (c.getStringOrNull(4) == null) {
+                    path.substring(path.lastIndexOf("/") + 1)
+                } else c.getString(4)
                 val albumId: Long =
                     c.getLong(c.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID))
 
 
                 val track =
-                    Track.Builder().trackName(name).artistName(artist).trackUrl(path).trackId(i)
+                    Track.Builder().trackName(name).artistName(artist).album(album).trackUrl(path)
+                        .trackId(i)
                 try {
                     val contentUri = ContentUris.withAppendedId(
                         MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
@@ -107,6 +115,7 @@ class TrackRepositoryImpl @Inject constructor(context: Context, private val trac
                     )
                 } catch (e: FileNotFoundException) {
                     Log.e("TAG", "createTracks: ", e)
+                    track.trackImage(drawableToBitmap(R.drawable.no_pictures.toDrawable()))
                 }
 
                 tracks.add(track.build())

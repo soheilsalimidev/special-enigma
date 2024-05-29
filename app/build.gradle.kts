@@ -116,6 +116,7 @@ dependencies {
     // Jetpack Compose and related libraries
     implementation(platform(Deps.composeBom))
     implementation("androidx.room:room-common:2.6.1")
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.6.7")
     androidTestImplementation(Deps.composeBom)
     implementation(Deps.composeUI)
     implementation(Deps.composeUiGraphics)

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.PlayerEvents
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_outline
 
 /**
  * [BottomPlayerTab] is a composable that represents the bottom player tab UI in the application.
@@ -33,7 +33,7 @@ fun BottomPlayerTab(
         modifier = Modifier
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-            .background(color = md_theme_light_outline)
+            .background(color = MaterialTheme.colorScheme.surface)
             .clickable(onClick = onBottomTabClick)
             .padding(all = 15.dp)
     ) {

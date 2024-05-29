@@ -16,9 +16,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.androidClass.musicPlayer.models.Track
-import com.androidClass.musicPlayer.ui.composable.BottomPlayerTab
 import com.androidClass.musicPlayer.ui.composable.BottomSheetDialog
-import com.androidClass.musicPlayer.ui.theme.MusicPlayerJetpackComposeTheme
+import com.androidClass.musicPlayer.ui.theme.AppTheme
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.FileNotFoundException
@@ -97,7 +96,7 @@ class PlayerActivity2 : androidx.activity.ComponentActivity() {
 
         setContent {
             // Set the theme of the app to MusicPlayerJetpackComposeTheme.
-            MusicPlayerJetpackComposeTheme {
+            AppTheme {
 
                 Surface(modifier = Modifier.fillMaxSize()) {
                     BottomSheetDialog(

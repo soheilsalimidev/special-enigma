@@ -22,9 +22,6 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.androidClass.musicPlayer.R
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.PlayerStates
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_onPrimary
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_onPrimaryContainer
-import com.androidClass.musicPlayer.ui.theme.typography
 
 /**
  * A composable function that displays an image for a track.
@@ -55,8 +52,6 @@ fun TrackImage(
 fun TrackName(trackName: String, modifier: Modifier) {
     Text(
         text = trackName,
-        style = typography.bodyLarge,
-        color = md_theme_light_onPrimary,
         modifier = modifier.padding(start = 16.dp, end = 8.dp)
     )
 }
@@ -73,7 +68,7 @@ fun PreviousIcon(onClick: () -> Unit, isBottomTab: Boolean) {
         Icon(
             painter = painterResource(id = R.drawable.ic_previous),
             contentDescription = stringResource(id = R.string.icon_skip_previous),
-            tint = if (isBottomTab) md_theme_light_onPrimary else md_theme_light_onPrimaryContainer,
+//            tint = if (isBottomTab) md_theme_light_onPrimary else md_theme_light_onPrimaryContainer,
             modifier = Modifier.size(48.dp)
         )
     }
@@ -94,7 +89,7 @@ fun PlayPauseIcon(selectedTrack: Track, onClick: () -> Unit, isBottomTab: Boolea
             modifier = Modifier
                 .size(size = 48.dp)
                 .padding(all = 9.dp),
-            color = if (isBottomTab) md_theme_light_onPrimary else md_theme_light_onPrimaryContainer,
+//            color = if (isBottomTab) md_theme_light_onPrimary else md_theme_light_onPrimaryContainer,
         )
     } else {
         IconButton(onClick = onClick) {
@@ -104,7 +99,7 @@ fun PlayPauseIcon(selectedTrack: Track, onClick: () -> Unit, isBottomTab: Boolea
                     else R.drawable.ic_play
                 ),
                 contentDescription = stringResource(id = R.string.icon_play_pause),
-                tint = if (isBottomTab) md_theme_light_onPrimary else md_theme_light_onPrimaryContainer,
+//                tint = if (isBottomTab) md_theme_light_onPrimary else md_theme_light_onPrimaryContainer,
                 modifier = Modifier.size(48.dp)
             )
         }
@@ -123,7 +118,7 @@ fun NextIcon(onClick: () -> Unit, isBottomTab: Boolean) {
         Icon(
             painter = painterResource(id = R.drawable.ic_next),
             contentDescription = stringResource(id = R.string.icon_skip_next),
-            tint = if (isBottomTab) md_theme_light_onPrimary else md_theme_light_onPrimaryContainer,
+//            tint = if (isBottomTab) md_theme_light_onPrimary else md_theme_light_onPrimaryContainer,
             modifier = Modifier.size(48.dp)
         )
     }

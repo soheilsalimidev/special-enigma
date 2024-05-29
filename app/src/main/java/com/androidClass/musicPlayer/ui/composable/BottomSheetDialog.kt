@@ -1,7 +1,9 @@
 package com.androidClass.musicPlayer.ui.composable
 
 import android.graphics.Bitmap
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,14 +27,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.androidClass.musicPlayer.R
 import com.androidClass.musicPlayer.models.Track
 import com.androidClass.musicPlayer.player.PlaybackState
 import com.androidClass.musicPlayer.player.PlayerEvents
-import com.androidClass.musicPlayer.ui.theme.md_theme_light_surfaceVariant
-import com.androidClass.musicPlayer.ui.theme.typography
 import com.androidClass.musicPlayer.utils.formatTime
 import kotlinx.coroutines.flow.StateFlow
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 /**
  * [BottomSheetDialog] is a composable that represents the bottom sheet dialog which contains information about the selected track,
@@ -39,17 +47,18 @@ import kotlinx.coroutines.flow.StateFlow
  */
 @Composable
 fun BottomSheetDialog(
-    selectedTrack: Track,
-    playerEvents: PlayerEvents,
-    playbackState: StateFlow<PlaybackState>
+    selectedTrack: Track, playerEvents: PlayerEvents, playbackState: StateFlow<PlaybackState>
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surface)
     ) {
         TrackInfo(
             trackImage = selectedTrack.trackImage,
             trackName = selectedTrack.trackName,
-            artistName = selectedTrack.artistName
+            artistName = selectedTrack.artistName,
+            album = selectedTrack.album
         )
         TrackProgressSlider(playbackState = playbackState) {
             playerEvents.onSeekBarPositionChanged(it)
@@ -70,35 +79,31 @@ fun BottomSheetDialog(
  * @param trackName The name of the track.
  * @param artistName The name of the artist.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TrackInfo(trackImage: Bitmap, trackName: String, artistName: String) {
+fun TrackInfo(trackImage: Bitmap, trackName: String, artistName: String, album: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(height = 350.dp)
-            .background(md_theme_light_surfaceVariant)
     ) {
         TrackImage(
-            trackImage = trackImage,
-            modifier = Modifier
+            trackImage = trackImage, modifier = Modifier
                 .fillMaxSize()
                 .padding(all = 16.dp)
         )
     }
     Text(
         text = trackName,
-        style = typography.bodyLarge,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp, start = 16.dp, end = 16.dp)
     )
+
     Text(
-        text = artistName,
-        style = typography.bodySmall,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp)
+        text = "$artistName.$album", modifier = Modifier.basicMarquee()
     )
+
 }
 
 /**
@@ -109,8 +114,7 @@ fun TrackInfo(trackImage: Bitmap, trackName: String, artistName: String) {
  */
 @Composable
 fun TrackProgressSlider(
-    playbackState: StateFlow<PlaybackState>,
-    onSeekBarPositionChanged: (Long) -> Unit
+    playbackState: StateFlow<PlaybackState>, onSeekBarPositionChanged: (Long) -> Unit
 ) {
     val playbackStateValue = playbackState.collectAsState(
         initial = PlaybackState(0L, 0L)
@@ -139,11 +143,9 @@ fun TrackProgressSlider(
     ) {
         Text(
             text = playbackStateValue.currentPlaybackPosition.formatTime(),
-            style = typography.bodySmall
         )
         Text(
             text = playbackStateValue.currentTrackDuration.formatTime(),
-            style = typography.bodySmall
         )
     }
 }
@@ -172,9 +174,7 @@ fun TrackControls(
     ) {
         PreviousIcon(onClick = onPreviousClick, isBottomTab = false)
         PlayPauseIcon(
-            selectedTrack = selectedTrack,
-            onClick = onPlayPauseClick,
-            isBottomTab = false
+            selectedTrack = selectedTrack, onClick = onPlayPauseClick, isBottomTab = false
         )
         NextIcon(onClick = onNextClick, isBottomTab = false)
     }

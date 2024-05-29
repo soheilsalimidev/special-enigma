@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.room.Room
 import com.androidClass.musicPlayer.AppDatabase
 import com.androidClass.musicPlayer.ui.composable.HomeScreenParent
-import com.androidClass.musicPlayer.ui.theme.MusicPlayerJetpackComposeTheme
+import com.androidClass.musicPlayer.ui.theme.AppTheme
 import com.androidClass.musicPlayer.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -84,7 +84,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             // Set the theme of the app to MusicPlayerJetpackComposeTheme.
-            MusicPlayerJetpackComposeTheme {
+            AppTheme {
                 // Create a surface container using the Surface Composable.
                 Surface(modifier = Modifier.fillMaxSize()) {
                     // Setup the HomeScreenParent with the viewModel.
