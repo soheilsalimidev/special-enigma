@@ -1,0 +1,22 @@
+{
+  "name": "nosql",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.44.0",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "codemirror-theme-vars": "^0.1.2",
+    "prism-theme-vars": "^0.2.4",
+    "slidev-theme-penguin": "^2.1.0"
+  },
+  "devDependencies": {
+    "@iconify-json/logos": "^1.1.37",
+    "playwright-chromium": "^1.40.1"
+  }
+}
