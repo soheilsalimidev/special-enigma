@@ -181,6 +181,8 @@ dependencies {
     //debugImplementation ("androidx.compose.ui:ui-test-manifest:1.3.0")
 
     testImplementation ("io.mockk:mockk:1.12.3") // Replace with the latest version
+    testImplementation ("io.mockk:mockk-android:1.13.10")
+    testImplementation ("io.mockk:mockk-agent:1.13.10")
     //androidTestImplementation ("androidx.test:testing-platform:1.0.1") // Replace with the latest version
     //androidTestImplementation("androidx.test:annotation:1.1.0-alpha04")
     //androidTestImplementation ("androidx.contrib:androidx-test-ext-junit:1.1.3")// Replace with the latest version

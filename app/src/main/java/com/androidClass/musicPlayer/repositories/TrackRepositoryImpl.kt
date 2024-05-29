@@ -1,11 +1,8 @@
 package com.androidClass.musicPlayer.repositories
 
 import android.annotation.SuppressLint
-import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
@@ -13,7 +10,6 @@ import android.util.Size
 import androidx.annotation.RequiresApi
 import com.androidClass.musicPlayer.models.Track
 import java.io.FileNotFoundException
-import java.io.IOException
 import javax.inject.Inject
 
 
@@ -39,7 +35,7 @@ class TrackRepositoryImpl @Inject constructor(context: Context) : TrackRepositor
 
     @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("Range", "Recycle", "SuspiciousIndentation")
-    private fun createTracks(context: Context) {
+    fun createTracks(context: Context) {
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val projection = arrayOf(
             MediaStore.Audio.AudioColumns.DATA,
@@ -54,7 +50,7 @@ class TrackRepositoryImpl @Inject constructor(context: Context) : TrackRepositor
            null,
             null
         )
-var i =0;
+        var i =0;
         if (c != null) {
             while (c.moveToNext()) {
                 i++;

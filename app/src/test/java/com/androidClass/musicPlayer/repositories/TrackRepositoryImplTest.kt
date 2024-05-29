@@ -2,30 +2,22 @@ package com.androidClass.musicPlayer.repositories
 
 import android.content.ContentResolver
 import android.os.Build
-import androidx.annotation.RequiresApi
 import org.junit.Assert.*
 import org.junit.Test
-import com.androidClass.musicPlayer.models.Track
-import org.junit.Assert.*  // Assuming JUnit for assertions (assertTrue, assertEquals, etc.)
-import org.junit.BeforeClass
 import kotlin.test.assertNotNull  // If using additional assertions from Kotlin test library
-import org.mockito.Mock  // If using Mockito for mocking (replace with your preferred mocking library)
-import org.mockito.Mockito.`when`  // If using Mockito for mocking (replace with your preferred mocking library syntax)
 import org.junit.Assert.assertTrue  // Assuming you only use these specific assertions
 import org.junit.Assert.assertEquals
-import org.junit.contrib.android.modernizer.Modernizer // Assuming using androidx libraries
-import androidx.contrib.android.modernizer
-
-
 import android.database.Cursor
 import io.mockk.every
 import io.mockk.mockk
 import android.content.Context
 import androidx.test.filters.SdkSuppress
+import org.mockito.ArgumentMatchers.any
+//import androidx.test.filters.SdkSuppress
 import java.io.FileNotFoundException
 
 
-@Modernizer // Add this if your project uses androidx libraries
+//@Modernizer // Add this if your project uses androidx libraries
 @SdkSuppress(minSdkVersion = Build.VERSION_CODES.Q)  // Assuming the original class requires API level 29
 class TrackRepositoryImplTest {
 
