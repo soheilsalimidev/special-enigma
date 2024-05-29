@@ -31,7 +31,7 @@ object Deps {
     val androidTestJUnit by lazy { "androidx.test.ext:junit:${Versions.androidTestJUnit}" }
     val androidTestExpresso by lazy { "androidx.test.espresso:espresso-core:${Versions.androidTestEspresso}" }
 
-    val composeUI by lazy { "androidx.compose.ui:ui" }
+    val composeUI by lazy { "androidx.compose.ui:ui:1.2.0-beta03" }
     val composeUiGraphics by lazy { "androidx.compose.ui:ui-graphics" }
     val composeUiToolingPreview by lazy { "androidx.compose.ui:ui-tooling-preview" }
     val composeMaterial3 by lazy { "androidx.compose.material3:material3" }
