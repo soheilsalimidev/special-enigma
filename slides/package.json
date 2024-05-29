@@ -1,5 +1,5 @@
 {
-  "name": "nosql",
+  "name": "msply",
   "type": "module",
   "private": true,
   "scripts": {
@@ -11,12 +11,10 @@
     "@slidev/cli": "^0.44.0",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
-    "codemirror-theme-vars": "^0.1.2",
-    "prism-theme-vars": "^0.2.4",
-    "slidev-theme-penguin": "^2.1.0"
+    "slidev-theme-penguin": "^2.1.0",
+    "vue": "^3.4.27"
   },
   "devDependencies": {
-    "@iconify-json/logos": "^1.1.37",
-    "playwright-chromium": "^1.40.1"
+    "@iconify-json/logos": "^1.1.37"
   }
 }

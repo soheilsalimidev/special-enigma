@@ -230,3 +230,7 @@ pre[class*="language-"] {
 #slide-content {
   background-color: #263238
 }
+
+.slidev-layout .slidev-code-wrapper{
+max-width:unset !important
+}
